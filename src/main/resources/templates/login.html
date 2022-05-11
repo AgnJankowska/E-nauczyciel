@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy</title>
+</head>
+
+<body>
+    <div class="content">
+            <main>
+                <section>
+                    <div class="row m-0">
+                        <div class="column1 d-none d-lg-block col-xl-5 col-lg-4 col-12 ">
+                            <div class="tile1 font-weight-bold text-uppercase">
+                                <a href="\teacher" class="py-md-5 py-5 tilelink">Jestem nauczycielem</a>
+                                <div>
+                                    <form th:action="@{/login}" method="post">
+                                        <input class="form-control" type="text" placeholder="login" required name="username">
+                                        <input class="form-control my-2" type="password" placeholder="hasło" required name="password">
+                                        <p th:if="${param.error}" style="width: 298px;" class="messageErrFont">Logowanie nieudane, spróbuj ponownie</p>
+                                        <button type="submit" class="btn btn-primary mb-2">Zaloguj</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column2 d-none d-lg-block px-0 col-xl-2 col-lg-4">
+                            <h1 class="title pt-5">E-nauczanie </h1>
+                            <hr>
+                            <h2 class="title-small pt-3">Platforma stworzona z myślą o uczniach i ich nauczycielach</h2>
+                        </div>
+                        <div class="column3 d-none d-lg-block col-xl-5 col-lg-4 col-12">
+                            <div class="tile1 font-weight-bold text-uppercase">
+                                <a href="\student" class="py-md-5 py-5 tilelink">Jestem uczniem</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column2small col-12 d-lg-none pb-2">
+                        <h1 class="title pt-3">E-nauczanie </h1>
+                    </div>
+                    <div class="column1small col-12 d-lg-none">
+                        <div class="tile1 font-weight-bold text-uppercase">
+                            <a href="\teacher" class="py-md-5 py-5 tilelink">Jestem nauczycielem</a>
+                            <div>
+                                <form th:action="@{/login}" method="post">
+                                    <input class="form-control" type="text" placeholder="login" required name="username">
+                                    <input class="form-control my-2" type="password" placeholder="hasło" required name="password">
+                                    <p th:if="${param.error}" style="width: 298px;" class="messageErrFont">Logowanie nieudane, spróbuj ponownie</p>
+                                    <button type="submit" class="btn btn-primary mb-2">Zaloguj</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column3small col-12 d-lg-none">
+                        <div class="tile1 font-weight-bold text-uppercase">
+                            <a href="\student" class="py-md-5 py-5 tilelink">Jestem uczniem</a>
+                        </div>
+                    </div>
+
+                    <div id="extra"></div>
+                </section>
+            </main>
+    </div>
+    <footer>
+        <div id="information">2022 &copy; Created by: Agnieszka Jankowska</div>
+    </footer>
+</body>
+</html>
