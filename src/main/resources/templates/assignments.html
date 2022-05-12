@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel nauczyciela</title>
+</head>
+
+<body>
+    <div class="contentTeacher">
+        <header th:include="baseTeacher.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseTeacher.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseTeacher.html :: navBigBase"></div>
+
+                    <!--/*@thymesVar id="container" type="pl.agnieszkajankowska.enauczyciel.model.SelectedValueContainer"*/-->
+                    <!--/*@thymesVar id="assignment" type="pl.agnieszkajankowska.enauczyciel.model.Assignment"*/-->
+                    <!--/*@thymesVar id="section" type="pl.agnieszkajankowska.enauczyciel.model.Section"*/-->
+                    <!--/*@thymesVar id="subject" type="pl.agnieszkajankowska.enauczyciel.model.Subject"*/-->
+
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2 pl-3">Panel nauczyciela</h1>
+                        <hr>
+
+                        <!--SEKCJA GLOWNA-->
+                        <div class="row text-left">
+                            <div class="col title-for-selected-elem"><h4 class="pl-3"><b>Krok 1:</b> Wybrany przedmiot</h4></div>
+                            <div class="col-12 col-md mb-2"><div class="div-selected-elem row p-0 mx-3 " ><h4 th:text="${subject.description}" class="name-selected-elem col-9 m-0"></h4><a th:href="@{/teacher/subjects}" role="button" class="btn btn-primary col-3 m-0">Zmień</a></div></div>
+                        </div>
+                        <div class="row text-left">
+                            <div class="col title-for-selected-elem"><h4 class="pl-3"><b>Krok 2:</b> Wybrany dział</h4></div>
+                            <div class="col-12 col-md mb-2"><div class="div-selected-elem row p-0 mx-3 "><h4 th:text="${section.description}" class="name-selected-elem col-9 m-0"></h4><a th:href="@{/teacher/subjects/sections(subject=${subject.id})}" role="button" class="btn btn-primary col-3 m-0">Zmień</a></div></div>
+                        </div>
+                        <hr>
+                        <h4 class="pl-3"><b>Krok 3:</b> Utwórz nowe zadanie</h4>
+
+                        <div class="row p-0 m-0">
+                            <div class="col-xl-8 col-12 py-2">
+                                <form method="post" th:action="@{/teacher/subjects/sections/assignments(section=${section.id})}" th:object="${assignment}" id="form" enctype="multipart/form-data">
+                                    <p class="messageErr"  th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
+
+                                    <p class="message" th:if="${message != null}" th:text="${message}" id="formMessage"></p>
+                                    <p class="messageErr" th:if="${messageErr != null}" th:text="${messageErr}"></p>
+                                    <p class="messageErr" style="display: none;" id="inputError"></p>
+                                    <p class="messageErr" style="display: none;" id="correctAnswerError"></p>
+                                    <p class="messageErr" style="display: none;" id="correctImageSize"></p>
+
+                                    <fieldset>
+                                        <label class="mb-3">
+                                            <div class="row m-0 p-0">
+                                            <label class="mr-4">Treść zadania
+                                                <textarea required class="form-control size-big" rows="2" th:field="${assignment.question}" id="textAreaForm" onchange="checkLengthOfInput(this, 500)"></textarea>
+                                            </label>
+                                                <div class="row m-0 p-0">
+                                                    <label class="mr-4">Poprawna odpowiedź
+                                                        <input required class="form-control size-small" type="text" th:field="${assignment.correctAnswer}" id="correctAnswer" onchange="checkCorrectAnswer(this)"/>
+                                                    </label>
+                                                    <label for="formFile" class="form-label">Wgraj obrazek
+                                                        <span style="cursor: pointer; color: red" id="clear" class="input-group-addon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(X)</span>
+                                                        <input class="form-control-file size-medium p-0" type="file" name="formFile" multiple id="formFile" onchange="checkSizeOfIFile(this)"/>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label class="mr-4">Odpowiedź A
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerA}" id="formFileA" onchange="checkLengthOfInput(this, 100)">
+                                            </label>
+                                            <label>Odpowiedź B
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerB}" id="formFileB" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+                                            <label class="mr-4">Odpowiedź C
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerC}" id="formFileC" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+                                            <label>Odpowiedź D
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerD}" id="formFileD" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+                                        </label>
+                                    </fieldset>
+                                    <p>
+                                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                                        <button type="reset" class="btn btn-danger">Wyczyść</button>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                        <!--KONIEC SEKCJI-->
+                    </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+    <script src="/js/assignment.js"></script>
+</body>
+</html>
