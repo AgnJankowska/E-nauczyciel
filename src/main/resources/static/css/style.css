@@ -1,0 +1,355 @@
+html{
+	height: 100%;
+}
+body{
+	font-family: 'Hind Madurai', sans-serif;
+	text-align: center;
+	color: black;
+	background-color: white;
+	min-height: 100%;
+	margin: 0 0 -50px;
+	position:relative;
+}
+
+/*STOPKA*/
+#information{
+	border-color: lightgrey;
+	border-width: 1px 0px;
+	border-style: solid;
+
+	padding-top: 12px;
+	color: dimgray;
+	background-color: white;
+	height: 50px;
+	position:absolute;
+	bottom:0;
+	width: 100%;
+	font-size: 14px;
+}
+#extra{
+	height:50px;
+}
+
+/*INDEX.html LARGE*/
+.column1{
+	background: rgb(2,0,36);
+	background: linear-gradient(196deg, rgba(2,0,36,1) 11%, rgba(9,9,121,1) 53%, rgba(0,212,255,1) 99%);
+	min-height: 100vh;
+	margin: 0 0 -50px;
+}
+.column2{
+	min-height: 100vh;
+	margin: 0 0 -50px;
+	background-color: white;
+}
+.column3{
+    background: rgb(2,0,36);
+    background: linear-gradient(173deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 26%, rgba(12,177,167,1) 100%);
+	min-height: 100vh;
+	margin: 0 0 -50px;
+}
+
+/*INDEX.html SMALL*/
+.column1small{
+	background: rgb(2,0,36);
+	background: linear-gradient(196deg, rgba(2,0,36,1) 11%, rgba(9,9,121,1) 53%, rgba(0,212,255,1) 99%);
+	min-height: 400px;
+}
+.column2small{
+	min-height: 60px;
+	background-color: white;
+	text-align: left;
+}
+.column3small{
+    background: rgb(2,0,36);
+    background: linear-gradient(173deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 26%, rgba(12,177,167,1) 100%);
+	min-height: 400px;
+	margin: 0 0 -50px;
+}
+
+/*NAGLOWKI*/
+.title{
+	font-size: 26px;
+	font-weight: bold;
+	text-align: center;
+}
+.title-white{
+	text-align: left;
+	color: white;
+	font-size: 30px;
+	letter-spacing: 1px;
+	font-weight: bold;
+	text-decoration: none;
+    display: block;
+}
+.noDecoration:hover{
+    text-decoration:none;
+}
+
+.title-small{
+	font-size: 18px;
+	letter-spacing: 1px;
+}
+.internal-title{
+	font-size: 22px;
+	letter-spacing: 3px;
+	font-weight: bold;
+	color: white;
+}
+a.tilelink{
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+a.link{
+	color: black;
+	text-decoration: none;
+	display: block;
+}
+
+/*KAFELKI*/
+.tile1 {
+	letter-spacing: 2px;
+	color: white;
+	font-size: 22px;
+
+	border-color: lightgrey;
+	border-width: 1px;
+	border-style: solid;
+
+	width: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.tile1:hover {
+	scale: 1.03;
+	-webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	-moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	cursor: pointer;
+}
+
+.nav-tile{
+	color: white;
+	width: 260px;
+}
+.tile2 {
+	color: white;
+	border-color: #d9d9d9;
+	border-width: 1px;
+	border-style: solid;
+    border-radius: 5px;
+	letter-spacing: 1px;
+	font-size: 14px;
+}
+.tile2:hover {
+	scale: 1.03;
+	-webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	-moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	cursor: pointer;
+}
+.tile2small {
+	color: white;
+	font-size: 10px;
+}
+tile2small:hover {
+	scale: 1.03;
+	cursor: pointer;
+}
+
+.tileAnswer,
+.tileAnswerStudent{
+	border-color: lightgrey;
+	border-width: 1px;
+	border-style: solid;
+}
+.tileAnswerStudentHover:hover{
+	-webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,1);
+	-moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,1);
+	box-shadow: 0px 0px 6px 0px rgba(0,0,0,1);
+	cursor: pointer;
+}
+
+
+/*GLOWNY KAFELEK*/
+.container{
+	background-color: white;
+	color: black;
+	min-height: 87.5vh;
+	margin: 0 0 -50px;
+}
+.contentTeacher{
+	background: #00004e;
+	margin: 0 0 -50px;
+	padding-bottom: 40px;
+}
+.contentStudent{
+    background: #023a44;
+	min-height: 100vh;
+	margin: 0 0 -50px;
+	padding-bottom: 40px;
+}
+
+
+.form-select{
+	min-width: 250px;
+}
+
+.form-size{
+	width: 250px;
+}
+
+.size-big{
+	width: 400px;
+}
+
+.size-small{
+	width: 120px;
+}
+
+.size-medium{
+	width: 240px;
+}
+
+
+
+.div-selected-elem {
+	text-align: center;
+	width: 340px;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+}
+.name-selected-elem {
+	font-size: 20px;
+	font-weight: bolder;
+	color: black;
+	padding: .375rem .75rem;
+}
+
+
+
+
+.title-for-selected-elem{
+	max-width: 400px;
+}
+
+.assignmentsTile{
+	border-color: lightgrey;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.assignmentsTile:hover{
+	-webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	-moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	box-shadow: 0px 0px 12px 0px rgba(0,0,0,1);
+	cursor: pointer;
+}
+
+.assignmentsTileStudent{
+	border-color: lightgrey;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.innerAssignmentTile{
+    color: black;
+}
+
+.innerAssignmentTile:hover{
+    color: black;
+	text-decoration: none;
+}
+
+.bigNav{
+    font-size:26px;
+	font-weight: bold;
+}
+
+.smallNav{
+    font-size:20px;
+	font-weight: bold;
+}
+
+.commonSize{
+    width:140px;
+}
+
+.image{
+    max-height:400px;
+    max-width:370px;
+    height:auto;
+    width:auto;
+}
+
+
+
+
+.containerForImage {
+  max-width: 500px;
+}
+
+.imageAdjust{
+  width: 100%;
+  height: auto;
+}
+
+
+.overlay{
+    position: relative;
+}
+
+.overlay .deleteButton{
+    position: absolute;
+    right: 0px;
+    top: 24px;
+    display: block;
+    width: 35px;
+    height: 35px;
+    background-color: #111;
+    color: gray;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 26px;
+    padding-left: 10px;
+    opacity: 70%;}
+
+
+.overlay .deleteButton:hover{
+    opacity: 100%;}
+
+.message{
+    color:#006400;
+    font-size: 16px;
+    text-align: center;
+    background-color:#98FB98;
+}
+
+.messageErr{
+    color:#B22222;
+    font-size: 16px;
+    text-align: center;
+    background-color: #ffab91;
+}
+
+.messageErrFont{
+    color:red;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 0px;
+    text-transform: lowercase;
+}
+
+.scoreInformation{
+    font-size: 20px;
+	font-weight: bold;
+}
+
+
+

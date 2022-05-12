@@ -1,0 +1,21 @@
+
+<nav th:fragment="navBase">
+    <div class="row d-xl-none m-0 pb-2">
+        <div class="row col-12 mx-0 my-0 p-0 justify-content-end pr-2">
+            <div class="tile2small col-auto"><a href="\student\learn\subjects" class="tilelink"><span class="smallNav"> <i class="icon-book-open"></i> NAUKA</span></a></div>
+            <div class="tile2small col-auto"><a href="\student\test" class="tilelink"><span class="smallNav"> <i class="icon-graduation-cap"></i> TESTY</span></a></div>
+        </div>
+    </div>
+</nav>
+
+
+<div th:fragment="navBigBase">
+    <nav>
+        <div class="tile2 p-3 mx-4 my-5"><a href="\student\learn\subjects" class="tilelink"><span class="bigNav"> <i class="icon-book-open"></i> NAUKA</span><br>ćwicz i ucz się</a></div>
+        <div class="tile2 p-3 mx-4 my-5"><a href="\student\test" class="tilelink"><span class="bigNav"> <i class="icon-graduation-cap"></i> TESTY</span><br>sprawdź wiedzę</a></div>
+    </nav>
+</div>
+
+<header th:fragment="headerBase">
+    <a href="/student" class="noDecoration"><h1 class="title-white pt-4 pl-3">E-nauczanie</h1></a>
+</header>
