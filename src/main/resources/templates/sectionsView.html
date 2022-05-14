@@ -45,6 +45,24 @@
                                     <p style="width: 250px;" class="messageErr" th:if="${messageErr != null}" th:text="${messageErr}"></p>
                                     <button class="my-2 btn btn-primary commonSize" type="submit">Wybierz dział</button> W celu modyfikacji / usunięcia zadań wybierz dział z listy.
                                 </form>
+
+                                <!--edycja-->
+                                <form method="post" th:object="${section}" th:action="@{/teacher/subjectsView/sectionsView(subject=${subject.id})}" id="form">
+                                    <input th:field="*{id}" type="hidden" id="selectedSectionId">
+                                    <button type="button" id="edit" class="my-2 btn btn-primary commonSize">Edytuj nazwę</button>  Zmiana nazwy działu w żaden sposób nie wpływa na jego zadania.<br>
+                                    <div id="descriptionChanging" style="display: none;" class="row p-0 m-0">
+                                        <input id="inputForm" th:field="*{description}" type="text" class="form-control form-size mt-2" placeholder="nowa nazwa" style="display:inline-block;" required>
+                                        <button type="submit" name="action" value="edit" class="my-2 btn btn-primary commonSize"  style="display:inline-block; width: 70px;">Zapisz</button>
+                                        <button id="reset" type="reset" class="btn btn-danger" style="display:inline-block; width: 90px;">Wyczyść</button>
+                                        <p style="width: 250px; display: none;" class="messageErr" id="inputError">Max 100 znaków</p>
+                                    </div>
+                                </form>
+
+                                <!--usunięcie-->
+                                <form method="post" th:object="${section}" th:action="@{/teacher/subjectsView/sectionsView(subject=${subject.id})}" id="deleteForm">
+                                    <input th:field="*{id}" type="hidden" id="deletedSectionId">
+                                    <button type="submit" name="action" value="delete" id="delete" class="my-2 btn btn-danger commonSize">Usuń dział</button>  Usunięcie działu wiąże się z wykasowaniem wszystkich jego zadań.
+                                </form>
                             </div>
 
                         <!--KONIEC SEKCJI-->
@@ -56,6 +74,37 @@
         </main>
     </div>
     <footer th:include="base.html :: footerBase"></footer>
+
+    <script src="/js/subjectAndSection.js"></script>
+    <script type="text/javascript">
+         document.getElementById("edit").addEventListener("click", displayInput);
+         document.getElementById("delete").addEventListener("click", displayWarning);
+
+         function displayInput() {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            if(selectedValue != null && selectedValue != '') {
+                document.getElementById("descriptionChanging").style.display = 'block';
+                document.getElementById("selectedSectionId").value = selectedValue;
+            } else {
+                alert("Wybierz dział z listy");
+            }
+         }
+
+         function displayWarning(event) {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            document.getElementById("deletedSectionId").value = selectedValue;
+
+            if(selectedValue != null && selectedValue != '') {
+                if(!confirm("Czy na pewno usunać cały dział wraz z przypisanymi zadaniami?")) {
+                    event.preventDefault();
+                }
+            } else {
+                alert("Wybierz dział z listy");
+                event.preventDefault();
+            }
+         }
     </script>
 
 </body>
