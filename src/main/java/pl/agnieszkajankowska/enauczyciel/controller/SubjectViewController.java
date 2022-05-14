@@ -47,6 +47,22 @@ public class SubjectViewController {
         return "subjectsView";
     }
 
+    @PostMapping(params="action=delete")
+    String deleteSubject(
+            @ModelAttribute("subject") Subject subject,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        try {
+            service.deleteSubject(subject);
+            model.addAttribute("message", "Przedmiot został usunięty");
+        } catch(Exception e) {
+            model.addAttribute("messageErr", "Przedmiot nie został usunięty - problem z badą danych");
+        }
+        addModelAttribute(model);
+        return "subjectsView";
+    }
+
     @ModelAttribute("subjectsList")
     List<Subject> getSubject() {
         return service.readAll();
