@@ -37,6 +37,21 @@
                         <div class="row p-0 m-0">
                             <div class="col-xl-8 col-12 py-2">
 
+                                <div class="assignmentsTile mb-4 p-2" th:each="assignment, iterator : ${assignmentsList}"><a th:href="@{/teacher/subjectsView/sectionsView/assignmentsView/modify(assignment=${assignment.id},section=${section.id})}" class="innerAssignmentTile">
+                                    <div style="font-weight:bold; font-size:20px;" class="mb-3">Zadanie <span th:text='${iterator.index + 1}'></span>. <span th:text="${assignment.question}"></span></div>
+                                    <div th:if="${assignment.pathToImage}" class="mb-3 containerForImage"><img class="imageAdjust" th:src="@{${assignment.pathToImage}}"/></div>
+                                    <div class="row p-0 m-0">
+                                        <div class="col-12 col-sm p-2 tileAnswer" th:style = "${assignment.correctAnswer.equals(T(pl.agnieszkajankowska.enauczyciel.model.CorrectAnswer).a)} ? 'color: green; font-weight:bold; background-color:palegreen;' : 'color: black' "><span style="font-weight:bold;" class="mr-2">A</span><span th:text="${assignment.answerA}"></span>  </div>
+                                        <div class="col-12 col-sm p-2 tileAnswer" th:style = "${assignment.correctAnswer.equals(T(pl.agnieszkajankowska.enauczyciel.model.CorrectAnswer).b)} ? 'color: green; font-weight:bold; background-color:palegreen;' : 'color: black' "><span style="font-weight:bold;" class="mr-2">B</span><span th:text="${assignment.answerB}"></span>  </div>
+                                    </div>
+                                    <div class="row p-0 m-0">
+                                        <div class="col-12 col-sm p-2 tileAnswer" th:style = "${assignment.correctAnswer.equals(T(pl.agnieszkajankowska.enauczyciel.model.CorrectAnswer).c)} ? 'color: green; font-weight:bold; background-color:palegreen;' : 'color: black' "><span style="font-weight:bold;" class="mr-2">C</span><span th:text="${assignment.answerC}"></span>  </div>
+                                        <div class="col-12 col-sm p-2 tileAnswer" th:style = "${assignment.correctAnswer.equals(T(pl.agnieszkajankowska.enauczyciel.model.CorrectAnswer).d)} ? 'color: green; font-weight:bold; background-color:palegreen;' : 'color: black' "><span style="font-weight:bold;" class="mr-2">D</span><span th:text="${assignment.answerD}"></span>  </div>
+                                    </div>
+                                    <div style="text-align:right;"><span th:text='${iterator.index + 1}'></span>/<span th:text='${iterator.size}'></span></div>
+                                </a></div>
+                            </div>
+                        </div>
                         <!--KONIEC SEKCJI-->
                     </div>
                 </div>
@@ -45,5 +60,8 @@
         </main>
     </div>
     <footer th:include="base.html :: footerBase"></footer>
+
+    <script type="text/javascript"></script>
+
 </body>
 </html>

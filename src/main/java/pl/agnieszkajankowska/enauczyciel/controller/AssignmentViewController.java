@@ -45,9 +45,79 @@ public class AssignmentViewController {
         return "assignmentsModify";
     }
 
+    @PostMapping(value="/modify", params="action=withoutLoadedImage")
+    String editAssignmentWhichNotHadLoadedFile(
+            @ModelAttribute("assignment") @Valid Assignment selectedAssignment,
+            @RequestPart(name = "formFile") MultipartFile file,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        //@Valid annotation
+        if(bindingResult.hasErrors()) {
+            return "assignmentsModify";
+        }
+
+        try {
+            service.saveEditedAssignmentWhichNotHadLoadedFile(selectedAssignment, file, imageService.getPathToAttachedImage());
+            model.addAttribute("message", "Zadanie zostało zmienione!");
+        } catch (Exception e) {
+            model.addAttribute("messageErr", "Zadanie nie zostało dodane - problem z bazą danych");
+        }
+
+        addModelAttributeModify(model, selectedAssignment);
+        return "assignmentsModify";
+    }
+
+    @PostMapping(value="/modify", params="action=withLoadedImage")
+    String editAssignmentWhichHadLoadedFile(
+            @ModelAttribute("assignment") @Valid Assignment selectedAssignment,
+            @RequestPart(name = "formFile") MultipartFile file,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        //@Valid annotation
+        if(bindingResult.hasErrors()) {
+            return "assignmentsModify";
+        }
+
+        try {
+            service.saveEditedAssignmentWhichHadLoadedFile(selectedAssignment, file, imageService.getPathToAttachedImage());
+            model.addAttribute("message", "Zadanie zostało zmienione!");
+        } catch (Exception e) {
+            model.addAttribute("messageErr", "Zadanie nie zostało dodane - problem z bazą danych");
+        }
+
+        addModelAttributeModify(model, selectedAssignment);
+        return "assignmentsModify";
+    }
+
+    @PostMapping(params="action=delete")
+    String deleteAssignment(
+            @ModelAttribute("assignment") Assignment selectedAssignment,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        try {
+            service.deleteAssignmentById(selectedAssignment);
+            model.addAttribute("message", "Zadanie zostało usunięte");
+        } catch(Exception e) {
+            model.addAttribute("messageErr", "Zadanie nie zostało usunięte - problem z badą danych");
+        }
+
+        addModelAttribute(model, selectedAssignment.getSection());
+        return "assignmentsView";
+    }
+
     @ModelAttribute("assignmentsList")
     List<Assignment> getAssignments(Section currentSection) {
         return service.readBySection(currentSection);
+    }
+
+    private void addModelAttribute(Model model, Section section) {
+        model.addAttribute("assignment", new Assignment());
+        model.addAttribute("section", section);
+        model.addAttribute("subject", section.getSubject());
+        model.addAttribute("assignmentsList", getAssignments(section));
     }
 
     private void addModelAttributeModify(Model model, Assignment assignment) {
