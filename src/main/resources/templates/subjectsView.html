@@ -34,6 +34,9 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <p style="width: 250px;" class="messageErr"  th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
+                                    <p style="width: 250px;" class="message" th:if="${message != null}" th:text="${message}"></p>
+                                    <p style="width: 250px;" class="messageErr" th:if="${messageErr != null}" th:text="${messageErr}"></p>
                                     <button class="my-2 btn btn-primary commonSize" type="submit">Wyświetl działy</button>  W celu modyfikacji / usunięcia działów lub zadań wybierz przedmiot z listy.
                                 </form>
 
@@ -48,6 +51,12 @@
                                         <p style="width: 250px; display: none;" class="messageErr" id="inputError">Max 100 znaków</p>
                                     </div>
                                 </form>
+
+                                <!--usunięcie-->
+                                <form method="post" th:object="${subject}" th:action="@{/teacher/subjectsView}" id="deleteForm">
+                                    <input th:field="*{id}" type="hidden" id="deletedSubjectId">
+                                    <button type="submit" name="action" value="delete" id="delete" class="my-2 btn btn-danger commonSize">Usuń przedmiot</button>  Usunięcie przedmiotu wiąże się z wykasowaniem wszystkich jego działów i zadań.
+                                </form>
                             </div>
                         </div>
                         <!--KONIEC SEKCJI-->
@@ -59,5 +68,36 @@
     </div>
     <footer th:include="base.html :: footerBase"></footer>
 
+    <script src="/js/subjectAndSection.js"></script>
+    <script type="text/javascript">
+         document.getElementById("edit").addEventListener("click", displayInput);
+         document.getElementById("delete").addEventListener("click", displayWarning);
+
+         function displayInput() {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            if(selectedValue != null && selectedValue != '') {
+                document.getElementById("descriptionChanging").style.display = 'block';
+                document.getElementById("selectedSubjectId").value = selectedValue;
+            } else {
+                alert("Wybierz przedmiot z listy");
+            }
+         }
+
+         function displayWarning(event) {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            document.getElementById("deletedSubjectId").value = selectedValue;
+
+            if(selectedValue != null && selectedValue != '') {
+                if(!confirm("Czy na pewno usunać cały przedmiot wraz z przypisanymi działami i zadaniami?")) {
+                    event.preventDefault();
+                }
+            } else {
+                alert("Wybierz przedmiot z listy");
+                event.preventDefault();
+            }
+         }
+    </script>
 </body>
 </html>
