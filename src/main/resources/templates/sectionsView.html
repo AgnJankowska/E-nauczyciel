@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel nauczyciela</title>
+</head>
+
+<body>
+    <div class="contentTeacher">
+        <header th:include="baseTeacher.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseTeacher.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseTeacher.html :: navBigBase"></div>
+
+                    <!--/*@thymesVar id="container" type="pl.agnieszkajankowska.enauczyciel.model.SelectedValueContainer"*/-->
+                    <!--/*@thymesVar id="section" type="pl.agnieszkajankowska.enauczyciel.model.Section"*/-->
+                    <!--/*@thymesVar id="subject" type="pl.agnieszkajankowska.enauczyciel.model.Subject"*/-->
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2 pl-3">Panel nauczyciela</h1>
+                        <hr>
+
+                        <!--SEKCJA GLOWNA-->
+                        <div class="row text-left">
+                            <div class="col title-for-selected-elem"><h4 class="pl-3"><b>PRZEDMIOT:</b></h4></div>
+                            <div class="col-12 col-md mb-2"><div class="div-selected-elem row p-0 mx-3 " ><h4 th:text="${subject.description}" class="name-selected-elem col-9 m-0"></h4><a th:href="@{/teacher/subjectsView}" role="button" class="btn btn-primary col-3 m-0">Zmień</a></div></div>
+                        </div>
+                        <hr>
+                        <h4 class="pl-3"><b>DZIAŁ:</b> Edytuj / usuń dany dział lub wyświetl jego zadania</h4>
+
+                        <div class="row p-0 m-0">
+                            <div class="col-12 py-2">
+                                <form method="get" th:object="${container}" th:action="@{/teacher/subjectsView/sectionsView/assignmentsView}">
+                                    <div class="form-group">
+                                        <h5>Wybierz dział z listy</h5>
+                                        <select id="selection" required class="form-control form-size selectpicker" th:field="*{section}">
+                                            <option disabled value="">-</option>
+                                            <option th:each="section : ${sectionsList}"
+                                                    th:value="${section.id}"
+                                                    th:text="${section.description}">...
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <p style="width: 250px;" class="message" th:if="${message != null}" th:text="${message}"></p>
+                                    <p style="width: 250px;" class="messageErr" th:if="${messageErr != null}" th:text="${messageErr}"></p>
+                                    <button class="my-2 btn btn-primary commonSize" type="submit">Wybierz dział</button> W celu modyfikacji / usunięcia zadań wybierz dział z listy.
+                                </form>
+
+                                <!--edycja-->
+                                <form method="post" th:object="${section}" th:action="@{/teacher/subjectsView/sectionsView(subject=${subject.id})}" id="form">
+                                    <input th:field="*{id}" type="hidden" id="selectedSectionId">
+                                    <button type="button" id="edit" class="my-2 btn btn-primary commonSize">Edytuj nazwę</button>  Zmiana nazwy działu w żaden sposób nie wpływa na jego zadania.<br>
+                                    <div id="descriptionChanging" style="display: none;" class="row p-0 m-0">
+                                        <input id="inputForm" th:field="*{description}" type="text" class="form-control form-size mt-2" placeholder="nowa nazwa" style="display:inline-block;" required>
+                                        <button type="submit" name="action" value="edit" class="my-2 btn btn-primary commonSize"  style="display:inline-block; width: 70px;">Zapisz</button>
+                                        <button id="reset" type="reset" class="btn btn-danger" style="display:inline-block; width: 90px;">Wyczyść</button>
+                                        <p style="width: 250px; display: none;" class="messageErr" id="inputError">Max 100 znaków</p>
+                                    </div>
+                                </form>
+
+                                <!--usunięcie-->
+                                <form method="post" th:object="${section}" th:action="@{/teacher/subjectsView/sectionsView(subject=${subject.id})}" id="deleteForm">
+                                    <input th:field="*{id}" type="hidden" id="deletedSectionId">
+                                    <button type="submit" name="action" value="delete" id="delete" class="my-2 btn btn-danger commonSize">Usuń dział</button>  Usunięcie działu wiąże się z wykasowaniem wszystkich jego zadań.
+                                </form>
+                            </div>
+
+                        <!--KONIEC SEKCJI-->
+                        </div>
+                    </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+
+    <script src="/js/subjectAndSection.js"></script>
+    <script type="text/javascript">
+         document.getElementById("edit").addEventListener("click", displayInput);
+         document.getElementById("delete").addEventListener("click", displayWarning);
+
+         function displayInput() {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            if(selectedValue != null && selectedValue != '') {
+                document.getElementById("descriptionChanging").style.display = 'block';
+                document.getElementById("selectedSectionId").value = selectedValue;
+            } else {
+                alert("Wybierz dział z listy");
+            }
+         }
+
+         function displayWarning(event) {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            document.getElementById("deletedSectionId").value = selectedValue;
+
+            if(selectedValue != null && selectedValue != '') {
+                if(!confirm("Czy na pewno usunać cały dział wraz z przypisanymi zadaniami?")) {
+                    event.preventDefault();
+                }
+            } else {
+                alert("Wybierz dział z listy");
+                event.preventDefault();
+            }
+         }
+    </script>
+
+</body>
+</html>

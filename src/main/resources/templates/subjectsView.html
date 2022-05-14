@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel nauczyciela</title>
+</head>
+
+<body>
+    <div class="contentTeacher">
+        <header th:include="baseTeacher.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseTeacher.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseTeacher.html :: navBigBase"></div>
+
+                    <!--/*@thymesVar id="container" type="pl.agnieszkajankowska.enauczyciel.model.SelectedValueContainer"*/-->
+                    <!--/*@thymesVar id="subject" type="pl.agnieszkajankowska.enauczyciel.model.Subject"*/-->
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2 pl-3">Panel nauczyciela</h1>
+                        <hr>
+                        <!--SEKCJA GLOWNA-->
+                        <h4 class="pl-3"><b>PRZEDMIOT:</b> Edytuj / usuń dany przedmiot lub wyświetl jego działy</h4>
+
+                        <div class="row p-0 m-0">
+                            <div class="col-12 py-2">
+                                <form method="get" th:object="${container}" th:action="@{/teacher/subjectsView/sectionsView}">
+                                    <div class="form-group">
+                                        <h5>Wybierz przedmiot</h5>
+                                        <select id="selection" required class="form-control form-size selectpicker" th:field="*{subject}">
+                                            <option disabled value="">-</option>
+                                            <option th:each="subject : ${subjectsList}"
+                                                    th:value="${subject.id}"
+                                                    th:text="${subject.description}">...
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <p style="width: 250px;" class="messageErr"  th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
+                                    <p style="width: 250px;" class="message" th:if="${message != null}" th:text="${message}"></p>
+                                    <p style="width: 250px;" class="messageErr" th:if="${messageErr != null}" th:text="${messageErr}"></p>
+                                    <button class="my-2 btn btn-primary commonSize" type="submit">Wyświetl działy</button>  W celu modyfikacji / usunięcia działów lub zadań wybierz przedmiot z listy.
+                                </form>
+
+                                <!--edycja-->
+                                <form method="post" th:object="${subject}" th:action="@{/teacher/subjectsView}" id="form">
+                                    <input th:field="*{id}" type="hidden" id="selectedSubjectId">
+                                    <button type="button" id="edit" class="my-2 btn btn-primary commonSize">Edytuj nazwę</button>  Zmiana nazwy przedmiotu w żaden sposób nie wpływa na jego działy i zadania.<br>
+                                    <div id="descriptionChanging" style="display: none;" class="row p-0 m-0">
+                                        <input id="inputForm" th:field="*{description}" type="text" class="form-control form-size mt-2" placeholder="nowa nazwa" style="display:inline-block;" required>
+                                        <button type="submit" name="action" value="edit" class="my-2 btn btn-primary commonSize"  style="display:inline-block; width: 70px;">Zapisz</button>
+                                        <button id="reset" type="reset" class="btn btn-danger" style="display:inline-block; width: 90px;">Wyczyść</button>
+                                        <p style="width: 250px; display: none;" class="messageErr" id="inputError">Max 100 znaków</p>
+                                    </div>
+                                </form>
+
+                                <!--usunięcie-->
+                                <form method="post" th:object="${subject}" th:action="@{/teacher/subjectsView}" id="deleteForm">
+                                    <input th:field="*{id}" type="hidden" id="deletedSubjectId">
+                                    <button type="submit" name="action" value="delete" id="delete" class="my-2 btn btn-danger commonSize">Usuń przedmiot</button>  Usunięcie przedmiotu wiąże się z wykasowaniem wszystkich jego działów i zadań.
+                                </form>
+                            </div>
+                        </div>
+                        <!--KONIEC SEKCJI-->
+                    </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+
+    <script src="/js/subjectAndSection.js"></script>
+    <script type="text/javascript">
+         document.getElementById("edit").addEventListener("click", displayInput);
+         document.getElementById("delete").addEventListener("click", displayWarning);
+
+         function displayInput() {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            if(selectedValue != null && selectedValue != '') {
+                document.getElementById("descriptionChanging").style.display = 'block';
+                document.getElementById("selectedSubjectId").value = selectedValue;
+            } else {
+                alert("Wybierz przedmiot z listy");
+            }
+         }
+
+         function displayWarning(event) {
+            var selectedElem = document.getElementById("selection");
+            var selectedValue = selectedElem.value;
+            document.getElementById("deletedSubjectId").value = selectedValue;
+
+            if(selectedValue != null && selectedValue != '') {
+                if(!confirm("Czy na pewno usunać cały przedmiot wraz z przypisanymi działami i zadaniami?")) {
+                    event.preventDefault();
+                }
+            } else {
+                alert("Wybierz przedmiot z listy");
+                event.preventDefault();
+            }
+         }
+    </script>
+</body>
+</html>
