@@ -31,7 +31,19 @@ public class SubjectViewController {
             BindingResult bindingResult,
             Model model
     ) {
-///
+        //@Valid annotation
+        if(bindingResult.hasErrors()) {
+            return "subjectsView";
+        }
+
+        try {
+            service.saveEditedSubject(subject);
+            model.addAttribute("message", "Nazwa przedmiotu została zmieniona");
+        } catch(Exception e) {
+            e.printStackTrace();
+            model.addAttribute("messageErr", "Nazwa nie została zmieniona - problem z bazą danych");
+        }
+        addModelAttribute(model);
         return "subjectsView";
     }
 
