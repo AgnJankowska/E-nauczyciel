@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel nauczyciela</title>
+</head>
+
+<body>
+    <div class="contentStudent">
+        <header th:include="baseStudent.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseStudent.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseStudent.html :: navBigBase"></div>
+
+                    <!--/*@thymesVar id="subject" type="pl.agnieszkajankowska.enauczyciel.model.Subject"*/-->
+                    <!--/*@thymesVar id="section" type="pl.agnieszkajankowska.enauczyciel.model.Section"*/-->
+                    <!--/*@thymesVar id="assignment" type="pl.agnieszkajankowska.enauczyciel.model.Assignment"*/-->
+
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2 pl-3">NAUKA</h1>
+                        <hr>
+
+                        <!--SEKCJA GLOWNA-->
+                        <div class="row text-left">
+                            <div class="col title-for-selected-elem"><h4 class="pl-3"><b>PRZEDMIOT:</b></h4></div>
+                            <div class="col-12 col-md mb-2"><div class="div-selected-elem row p-0 mx-3 " ><h4 th:text="${subject.description}" class="name-selected-elem col-9 m-0"></h4><a th:href="@{/student/learn/subjects}" role="button" class="btn btn-info col-3 m-0">Zmień</a></div></div>
+                        </div>
+                        <div class="row text-left"  th:if="${section}">
+                            <div class="col title-for-selected-elem"><h4 class="pl-3"><b>DZIAŁ:</b></h4></div>
+                            <div class="col-12 col-md mb-2"><div class="div-selected-elem row p-0 mx-3 " ><h4 th:text="${section.description}" class="name-selected-elem col-9 m-0"></h4><a th:href="@{/student/learn/subjects/sections(subject=${subject.id})}" role="button" class="btn btn-info col-3 m-0">Zmień</a></div></div>
+                        </div>
+                        <p class="message" th:if="${message != null}" th:text="${message}"></p>
+                        <div class="row p-0 m-0">
+                            <div class="col-xl-8 col-12 py-2">
+                                <h4 th:if="${assignment == null}" class="mt-3"><b>BRAK ZADAŃ DO WYŚWIETLENIA</b></h4>
+                            </div>
+                        </div>
+
+                        <!--KONIEC SEKCJI-->
+                    </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+</body>
+</html>
