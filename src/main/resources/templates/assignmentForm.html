@@ -1,0 +1,19 @@
+<div th:fragment="assignment">
+  <div id="assignmentsTileStudent" class="assignmentsTileStudent mb-4 p-2">
+    <div style="font-weight:bold; font-size:20px;" class="mb-3" >Zadanie <span th:text="*{question}"></span></div>
+    <div th:if="*{pathToImage}" class="mb-3 containerForImage"><img class="imageAdjust" th:src="@{*{pathToImage}}"/></div>
+    <div class="row p-0 m-0">
+      <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerA" onclick="setUserAnswer(this, 'a')"><span style="font-weight:bold;" class="mr-2">A</span><span th:text="*{answerA}"></span>  </div>
+      <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerB" onclick="setUserAnswer(this, 'b')"><span style="font-weight:bold;" class="mr-2">B</span><span th:text="*{answerB}"></span>  </div>
+    </div>
+    <div class="row p-0 m-0">
+      <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerC" onclick="setUserAnswer(this, 'c')"><span style="font-weight:bold;" class="mr-2">C</span><span th:text="*{answerC}"></span>  </div>
+      <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerD" onclick="setUserAnswer(this, 'd')"><span style="font-weight:bold;" class="mr-2">D</span><span th:text="*{answerD}"></span>  </div>
+    </div>
+
+    <h5 style="text-align: center; font-weight: bolder;" class="mt-2" id="messageAfterUsersChoice"></h5>
+  </div>
+
+  <input type="hidden" th:field="*{id}">
+  <button type="submit" class="btn btn-info commonSize">Dalej</button>
+</div>

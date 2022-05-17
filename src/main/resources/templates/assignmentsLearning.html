@@ -35,43 +35,11 @@
                             <div class="col-xl-8 col-12 py-2">
 
                                 <form  th:if="${assignment != null} and ${section}" method="post" th:action="@{/student/learn/subjects/sections/assignments(section=${section.id})}" th:object="${assignment}">
-                                    <div id="assignmentsTileStudent" class="assignmentsTileStudent mb-4 p-2">
-                                        <div style="font-weight:bold; font-size:20px;" class="mb-3" >Zadanie <span th:text="*{question}"></span></div>
-                                        <div th:if="*{pathToImage}" class="mb-3 containerForImage"><img class="imageAdjust" th:src="@{*{pathToImage}}"/></div>
-                                        <div class="row p-0 m-0">
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerA"><span style="font-weight:bold;" class="mr-2">A</span><span th:text="*{answerA}"></span>  </div>
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerB"><span style="font-weight:bold;" class="mr-2">B</span><span th:text="*{answerB}"></span>  </div>
-                                        </div>
-                                        <div class="row p-0 m-0">
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerC"><span style="font-weight:bold;" class="mr-2">C</span><span th:text="*{answerC}"></span>  </div>
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerD"><span style="font-weight:bold;" class="mr-2">D</span><span th:text="*{answerD}"></span>  </div>
-                                        </div>
-                                    
-                                        <h5 style="text-align: center; font-weight: bolder;" class="mt-2" id="messageAfterUsersChoice"></h5>
-                                      </div>
-                                    
-                                      <input type="hidden" th:field="*{id}">
-                                      <button type="submit" class="btn btn-info commonSize">Dalej</button>
+                                    <div th:include="assignmentForm.html :: assignment"></div>
                                 </form>
 
                                 <form  th:if="${assignment != null} and ${section == null}" method="post" th:action="@{/student/learn/subjects/allAssignments(subject=${subject.id})}" th:object="${assignment}">
-                                    <div id="assignmentsTileStudent" class="assignmentsTileStudent mb-4 p-2">
-                                        <div style="font-weight:bold; font-size:20px;" class="mb-3" >Zadanie <span th:text="*{question}"></span></div>
-                                        <div th:if="*{pathToImage}" class="mb-3 containerForImage"><img class="imageAdjust" th:src="@{*{pathToImage}}"/></div>
-                                        <div class="row p-0 m-0">
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerA"><span style="font-weight:bold;" class="mr-2">A</span><span th:text="*{answerA}"></span>  </div>
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerB"><span style="font-weight:bold;" class="mr-2">B</span><span th:text="*{answerB}"></span>  </div>
-                                        </div>
-                                        <div class="row p-0 m-0">
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerC"><span style="font-weight:bold;" class="mr-2">C</span><span th:text="*{answerC}"></span>  </div>
-                                          <div class="col-12 col-sm p-2 tileAnswerStudent tileAnswerStudentHover" id="answerD"><span style="font-weight:bold;" class="mr-2">D</span><span th:text="*{answerD}"></span>  </div>
-                                        </div>
-                                    
-                                        <h5 style="text-align: center; font-weight: bolder;" class="mt-2" id="messageAfterUsersChoice"></h5>
-                                      </div>
-                                    
-                                      <input type="hidden" th:field="*{id}">
-                                      <button type="submit" class="btn btn-info commonSize">Dalej</button>
+                                    <div th:include="assignmentForm.html :: assignment"></div>
                                 </form>
 
                                 <h4 th:if="${assignment == null}" class="mt-3"><b>BRAK ZADAŃ DO WYŚWIETLENIA</b></h4>
