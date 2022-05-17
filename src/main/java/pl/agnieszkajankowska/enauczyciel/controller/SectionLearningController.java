@@ -31,8 +31,15 @@ public class SectionLearningController {
         return "sectionsLearning";
     }
 
+    @ModelAttribute("sectionsList")
+    List<Section> getSection(Subject currentSubject) {
+        return service.readBySubject(currentSubject);
+    }
+
     private void addModelAttribute(Model model, Subject subject) {
         model.addAttribute("subject", subject);
         model.addAttribute("section", new Section());
+        model.addAttribute("container", new SelectedValueContainer());
+        model.addAttribute("sectionsList", getSection(subject));
     }
 }
