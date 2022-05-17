@@ -54,5 +54,55 @@
         </main>
     </div>
     <footer th:include="base.html :: footerBase"></footer>
+
+    <script th:inline="javascript">
+
+    function setUserAnswer(answerTile, letter) {
+
+        var arrayOfAnswer = [document.getElementById("answerA"),
+                         document.getElementById("answerB"),
+                         document.getElementById("answerC"),
+                         document.getElementById("answerD")];
+
+        resetTileStyle(arrayOfAnswer);
+
+        if([[!${assignmentsList.isEmpty()}]]) {
+            var assignment = [[${assignment}]];
+            var correctAnswer = assignment.correctAnswer;
+
+            if(correctAnswer == letter){
+                document.getElementById("messageAfterUsersChoice").style.color = 'green';
+                document.getElementById("messageAfterUsersChoice").innerHTML = '&#10004 Poprawna odpowiedź';
+
+                answerTile.style.background = 'palegreen';
+                answerTile.style.color = 'green';
+
+                blockOnClick(arrayOfAnswer);
+            }
+
+            else {
+                 document.getElementById("messageAfterUsersChoice").style.color = 'red';
+                 document.getElementById("messageAfterUsersChoice").innerHTML = '&#9747 Błędna odpowiedź, spróbuj jeszcze raz';
+
+                 answerTile.style.background = '#ffb3b3';
+                 answerTile.style.color = '#b30000';
+            }
+        }
+    }
+
+    function resetTileStyle(arrayOfAnswer) {
+        arrayOfAnswer.forEach((elem) => {
+            elem.style.background = 'none';
+            elem.style.color = 'black';
+        });
+    }
+
+    function blockOnClick(arrayOfAnswer) {
+        arrayOfAnswer.forEach((elem) => {
+            elem.classList.remove("tileAnswerStudentHover");
+            elem.setAttribute('onclick', '');
+        });
+    }
+    </script>
 </body>
 </html>
