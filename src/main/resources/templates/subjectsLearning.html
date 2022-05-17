@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel ucznia</title>
+</head>
+
+<body>
+    <div class="contentStudent">
+        <header th:include="baseStudent.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseStudent.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseStudent.html :: navBigBase"></div>
+
+                    <!--/*@thymesVar id="container" type="pl.agnieszkajankowska.enauczyciel.model.SelectedValueContainer"*/-->
+                    <!--/*@thymesVar id="subject" type="pl.agnieszkajankowska.enauczyciel.model.Subject"*/-->
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2 pl-3">NAUKA</h1>
+                        <hr>
+                        <!--SEKCJA GLOWNA-->
+                        <h4 class="pl-3"><b>PRZEDMIOT:</b> Wybierz przedmiot do nauki</h4>
+
+                        <div class="row p-0 m-0">
+                            <div class="col-12 py-2">
+                                <form method="get" th:object="${container}" th:action="@{/student/learn/subjects/sections}">
+                                    <div class="form-group">
+                                        <select id="selection" required class="form-control form-size selectpicker" th:field="*{subject}">
+                                            <option disabled value="">-</option>
+                                            <option th:each="subject : ${subjectsList}"
+                                                    th:value="${subject.id}"
+                                                    th:text="${subject.description}">...
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <button class="my-2 btn btn-info commonSize" type="submit">Wybierz</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!--KONIEC SEKCJI-->
+                    </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+</body>
+</html>
