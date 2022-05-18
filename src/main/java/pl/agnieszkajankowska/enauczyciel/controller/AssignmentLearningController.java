@@ -42,6 +42,42 @@ public class AssignmentLearningController {
         return "assignmentsLearning";
     }
 
+    @PostMapping("/sections/assignments")
+    public String readNextAssignmentBySection(
+            @ModelAttribute("assignment") Assignment previousAssignment,
+            @RequestParam("section") Section section,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        List<Assignment> assignmentsList = getAssignmentBySection(section);
+
+        model.addAttribute("assignment", service.getNextAssignment(previousAssignment, assignmentsList));
+        addModelAttribute(model, section);
+        return "assignmentsLearning";
+    }
+
+    @PostMapping("/allAssignments")
+    public String readNextAssignmentBySubject(
+            @ModelAttribute("assignment") Assignment previousAssignment,
+            @RequestParam("subject") Subject subject,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        List<Assignment> assignmentsList = getAssignmentBySubject(subject);
+
+        model.addAttribute("assignment", service.getNextAssignment(previousAssignment, assignmentsList));
+        addModelAttributeAllAssignment(model, subject);
+        return "assignmentsLearning";
+    }
+
+    private List<Assignment> getAssignmentBySection(Section currentSection) {
+        return service.readBySection(currentSection);
+    }
+
+    private List<Assignment> getAssignmentBySubject(Subject currentSubject) {
+        return service.readBySubject(currentSubject);
+    }
+
     private void addModelAttribute(Model model, Section section) {
         model.addAttribute("section", section);
         model.addAttribute("subject", section.getSubject());
