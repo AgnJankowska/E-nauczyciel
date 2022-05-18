@@ -33,15 +33,6 @@
                         <p class="message" th:if="${message != null}" th:text="${message}"></p>
                         <div class="row p-0 m-0">
                             <div class="col-xl-8 col-12 py-2">
-
-                                <form  th:if="${assignment != null} and ${section}" method="post" th:action="@{/student/learn/subjects/sections/assignments(section=${section.id})}" th:object="${assignment}">
-                                    <div th:include="assignmentForm.html :: assignment"></div>
-                                </form>
-
-                                <form  th:if="${assignment != null} and ${section == null}" method="post" th:action="@{/student/learn/subjects/allAssignments(subject=${subject.id})}" th:object="${assignment}">
-                                    <div th:include="assignmentForm.html :: assignment"></div>
-                                </form>
-
                                 <h4 th:if="${assignment == null}" class="mt-3"><b>BRAK ZADAŃ DO WYŚWIETLENIA</b></h4>
                             </div>
                         </div>
