@@ -31,9 +31,25 @@ public class AssignmentLearningController {
         return "assignmentsLearning";
     }
 
+    @GetMapping("/allAssignments")
+    public String readFirstAssignmentBySubject(
+            @ModelAttribute("container") SelectedValueContainer container,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        model.addAttribute("assignment", service.getFirstAssignmentOrNullBySubject(container.getSubject()));
+        addModelAttributeAllAssignment(model, container.getSubject());
+        return "assignmentsLearning";
+    }
+
     private void addModelAttribute(Model model, Section section) {
         model.addAttribute("section", section);
         model.addAttribute("subject", section.getSubject());
         model.addAttribute("assignmentsList", getAssignmentBySection(section));
+    }
+
+    private void addModelAttributeAllAssignment(Model model, Subject subject) {
+        model.addAttribute("subject", subject);
+        model.addAttribute("assignmentsList", getAssignmentBySubject(subject));
     }
 }
