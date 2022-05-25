@@ -23,7 +23,6 @@ public class UserService {
     public void initializeUsersTableWithBasicRecord() {
         if(repository.findAll().isEmpty()) {
             createAdmin();
-            createTeacher();
         }
     }
 
@@ -34,19 +33,6 @@ public class UserService {
 
         User user = new User();
         user.setLogin("admin");
-        user.setPassword(encoder.encode("haslo"));
-        user.setRole(role);
-
-        repository.save(user);
-    }
-
-    //tworzenie użytkownika teacher
-    private void createTeacher() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        Role role = Role.ROLE_TEACHER;
-
-        User user = new User();
-        user.setLogin("teacher");
         user.setPassword(encoder.encode("haslo"));
         user.setRole(role);
 

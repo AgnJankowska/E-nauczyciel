@@ -37,12 +37,7 @@ public class ImageService {
 
         IOUtils.copy(inputStream, outputStream);
 
-        return "/uploads/" + fileName;
-    }
-
-    //PRIVATE METHODS
-    private void setFileName(String fileName) {
-        this.fileName = fileName;
+        return fileName;
     }
 
     private  List<Path> getListOfFileInDB(String pathToUploadDirectory) throws IOException {
@@ -50,21 +45,5 @@ public class ImageService {
         Stream<Path> walk = Files.walk(Path.of(pathToUploadDirectory));
         return walk.filter(Files::isRegularFile)
                 .collect(Collectors.toList());
-    }
-
-    private String addNumberToRedundantNameOfFile(String fileNameInLowerCases) {
-
-        int indexOdComa = fileNameInLowerCases.indexOf('.');
-        return fileNameInLowerCases.substring(0, indexOdComa) + "(copy)" + fileNameInLowerCases.substring(indexOdComa);
-    }
-
-    private void changeNameOfFileIfAlreadyExistInDB(List<Path> listOfFilesNameInDB, String fileName) {
-        for (Path result: listOfFilesNameInDB) {
-            if(result.getFileName().toString().equals(fileName)) {
-                String fileNameChanged = addNumberToRedundantNameOfFile(fileName);
-                setFileName(fileNameChanged);
-                changeNameOfFileIfAlreadyExistInDB(listOfFilesNameInDB, fileNameChanged);
-            }
-        }
     }
 }
