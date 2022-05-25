@@ -22,11 +22,24 @@ public class SectionService {
     }
 
     public Section saveEditedSection(Section section)  throws NotFoundException {
-        editedSection.updateFrom(section);
+
+        Optional<Section> editedSectionOptional = findById(section.getId());
+
+        if(editedSectionOptional.isPresent()) {
+            Section editedSection = editedSectionOptional.get();
+            editedSection.updateFrom(section);
+            return saveSection(editedSection);
+        } else {
+            throw new NotFoundException("niewłaściwe ID");
+        }
     }
 
     public void deleteSection(Section section) throws NotFoundException {
-        delete(section.getId());
+        if(findById(section.getId()).isPresent()) {
+            delete(section.getId());
+        } else {
+            throw new NotFoundException("niewłaściwe ID");
+        }
     }
 
     public List<Section> readBySubject(Subject subject) {
