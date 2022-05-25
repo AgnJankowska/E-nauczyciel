@@ -16,15 +16,29 @@ public class SubjectService {
     private SubjectRepository repository;
 
     public Subject saveSubject(Subject toSave) {
+        toSave.setDescription(AxillaryService.formatTextBeforeSaveInDB(toSave.getDescription()));
         return repository.save(toSave);
     }
 
     public Subject saveEditedSubject(Subject subject) throws NotFoundException {
-        editedSubject.updateFrom(subject)
+
+        Optional<Subject> editedSubjectOptional = findById(subject.getId());
+
+        if(editedSubjectOptional.isPresent()) {
+            Subject editedSubject = editedSubjectOptional.get();
+            editedSubject.updateFrom(subject);
+            return saveSubject(editedSubject);
+        } else {
+            throw new NotFoundException("niewłaściwe ID");
+        }
     }
 
     public void deleteSubject(Subject subject) throws NotFoundException {
-        delete(subject.getId());
+        if(findById(subject.getId()).isPresent()) {
+            delete(subject.getId());
+        } else {
+            throw new NotFoundException("niewłaściwe ID");
+        }
     }
 
     public List<Subject> readAll() {
