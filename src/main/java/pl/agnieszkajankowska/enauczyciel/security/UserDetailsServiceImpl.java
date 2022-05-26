@@ -19,6 +19,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         service.initializeUsersTableWithBasicRecord();
 
         Optional<User> user = service.findByLogin(username);
-        MyUserDetails(user.get());
+        if (user.isPresent()) {
+            return new MyUserDetails(user.get());
+        } else {
+            throw new UsernameNotFoundException("Nie znaleziono użytkownika");
+        }
     }
 }
