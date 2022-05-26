@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel ucznia</title>
+</head>
+
+<body>
+    <div class="contentStudent">
+        <header th:include="baseStudent.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseStudent.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseStudent.html :: navBigBase"></div>
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2">Panel ucznia</h1>
+                        <hr>
+                        <!--SEKCJA GLOWNA-->
+                        <div class="col-md-8 col-xs-12 py-2">
+                            <h5 class="pl-3 mt-2">Aby poznać zadania i zdobyć niezbędną wiedzę rozpocznij od <b>trybu nauki</b>. Masz możliwość poznawania wszystkich zadań z danego <b>przedmiotu</b> bądź też wyboru <b>określonego działu</b>.</h5>
+                            <a class="btn btn-info ml-3 mb-4 commonSize" role="button" href="/student/learn/subjects">Nauka</a>
+                        </div>
+                        <hr>
+                        <div class="col-md-8 col-xs-12 py-2">
+                            <h5 class="pl-3 mt-2">Gdy już poznasz zadania dla poszczególnych działów, możesz rozpocząć wykonywanie <b>testów</b> dla danego przedmiotu. W ten sposób możesz sprawdzić swoją wiedzę ze wszystkich działów i obserwować postępy w nauce.</h5>
+                            <a class="btn btn-info ml-3 mb-4 commonSize" role="button" href="/student/test">Testy</a>
+                        </div>
+                        <hr>
+                        <!--KONIEC SEKCJI-->
+                        </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+</body>
+</html>

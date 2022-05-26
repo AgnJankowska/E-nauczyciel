@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="base.html :: headBase">
+    <title id="pageTitle">Enauczyciel-zawodowy - Panel nauczyciela</title>
+</head>
+
+<body>
+    <div class="contentTeacher">
+        <header th:include="baseTeacher.html :: headerBase"></header>
+        <main>
+            <section class="pb-2">
+                <nav th:include="baseTeacher.html :: navBase"></nav>
+                <div class="row mr-0">
+                    <div class="nav-tile d-none d-xl-block mx-4" th:include="baseTeacher.html :: navBigBase"></div>
+
+                    <!--/*@thymesVar id="section" type="pl.agnieszkajankowska.enauczyciel.model.Section"*/-->
+                    <!--/*@thymesVar id="assignment" type="pl.agnieszkajankowska.enauczyciel.model.Assignment"*/-->
+
+                    <div class ="container col text-left">
+                        <h1 class="title pt-2 pl-3">Panel nauczyciela</h1>
+                        <hr>
+
+                        <!--SEKCJA GLOWNA-->
+                        <h4 class="pl-3">Modyfikuj lub usuń zadanie</h4>
+
+                        <div class="row p-0 m-0">
+                            <div class="col-xl-8 col-12 py-2">
+                                <form method="post" th:action="@{/teacher/subjectsView/sectionsView/assignmentsView/modify(assignment=${assignment.id},section=${section.id})}" th:object="${assignment}" id="form" enctype="multipart/form-data">
+
+                                    <p style="color:red;" th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
+
+                                    <p class="message" th:if="${message != null}" th:text="${message}" id="formMessage"></p>
+                                    <p class="messageErr" th:if="${messageErr != null}" th:text="${messageErr}"></p>
+                                    <p class="messageErr" style="display: none;" id="inputError"></p>
+                                    <p class="messageErr" style="display: none;" id="correctAnswerError"></p>
+                                    <p class="messageErr" style="display: none;" id="correctImageSize"></p>
+
+                                    <fieldset>
+                                        <div class="mb-3">
+                                            <div class="row m-0 p-0">
+                                                <label class="mr-4">Treść pytania
+                                                    <textarea required class="form-control size-big" rows="2" th:field="${assignment.question}" id="textAreaForm" onchange="checkLengthOfInput(this, 500)"></textarea>
+                                                </label>
+                                                <label class="mr-4">Poprawna odpowiedź
+                                                    <input required class="form-control size-small" type="text" th:field="${assignment.correctAnswer}" id="correctAnswer" onchange="checkCorrectAnswer(this)"/>
+                                                </label>
+                                            </div>
+                                            <label class="mr-4">Odpowiedź A
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerA}" id="formFileA" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+                                            <label>Odpowiedź B
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerB}" id="formFileB" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+                                            <label class="mr-4">Odpowiedź C
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerC}" id="formFileC" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+                                            <label>Odpowiedź D
+                                                <input required class="form-control size-big" type="text" th:field="${assignment.answerD}" id="formFileD" onchange="checkLengthOfInput(this, 100)"/>
+                                            </label>
+
+                                            <div class="py-3">
+                                                <div class="overlay size-big" th:style = "${assignment.pathToImage} ? 'display: block' : 'display: none' " id="imageContener">
+                                                    Wgrany obrazek
+                                                    <img th:src="@{${assignment.pathToImage}}" width="400px" id="image"/>
+                                                    <span class="deleteButton" id="clearLoaded">x</span>
+                                                </div>
+                                                <div class="size-big" id="noneImageContener" th:style = "${assignment.pathToImage} ? 'display: none' : 'display: block' ">
+                                                    Wczytaj nowy obrazek
+                                                    <span style="cursor: pointer; color: red" id="clear" class="input-group-addon">&nbsp;&nbsp;&nbsp;(X)</span>
+                                                    <input class="form-control-file size-medium p-0" type="file" name="formFile" multiple id="formFile" onchange="checkSizeOfIFile(this)"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <p>
+                                        <button id="submit" name="action" value="withoutLoadedImage" type="submit" class="btn btn-primary commonSize" >Zapisz zmiany</button>  Dane zawarte w zadaniu ulegną zmianie, nie będzie możliwości cofnięcia czynności.<br>
+                                    </p>
+                                </form>
+
+                                <form method="post" th:action="@{/teacher/subjectsView/sectionsView/assignmentsView(section=${section.id})}" th:object="${assignment}">
+                                    <input type="hidden" th:field="${assignment.id}">
+                                    <button id="delete" name="action" value="delete" type="submit" class="btn btn-danger commonSize">Usuń zadanie</button>  Zadanie zostanie całkowicie usunięte, nie będzie możliwości cofnięcia czynności.
+                                </form>
+
+                                <a class="btn btn-primary my-3 commonSize" th:href="@{/teacher/subjectsView/sectionsView/assignmentsView(section=${section.id})}" role="button">Powrót</a>  Powrót bez zapisania danych nie spowoduje żadnych zmian w zadaniu.
+
+
+                            </div>
+                        </div>
+                        <!--KONIEC SEKCJI-->
+                    </div>
+                </div>
+                <div id="extra"></div>
+            </section>
+        </main>
+    </div>
+    <footer th:include="base.html :: footerBase"></footer>
+    <script src="/js/assignment.js"></script>
+    <script src="/js/assignmentExtended.js"></script>
+</body>
+</html>
